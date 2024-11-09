@@ -4,7 +4,9 @@ export default function Home() {
   return (
       <>
         <Header/>
-        <div>main</div>
+        <div className="Container">
+          <h1>Üdvözöllek a Dusza Verseny oldalán</h1>
+        </div>
       </>
   );
 }
