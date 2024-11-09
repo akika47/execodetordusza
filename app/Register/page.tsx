@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import '../Styles/Register.css'
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -94,46 +95,7 @@ const Register = () => {
         <button type="submit">Register</button>
       </form>
 
-      <style jsx>{`
-        .register-container {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          height: 100vh;
-          padding: 20px;
-        }
 
-        .register-form {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          width: 100%;
-          max-width: 400px;
-        }
-
-        input {
-          padding: 10px;
-          font-size: 16px;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-        }
-
-        button {
-          padding: 10px;
-          font-size: 16px;
-          background-color: #0070f3;
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-          background-color: #005bb5;
-        }
-      `}</style>
     </div>
   );
 };
