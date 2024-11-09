@@ -3,15 +3,10 @@
 import '../Styles/Header.css'
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+
 
 const Header = () => {
-  // const router = useRouter();
 
-  // const handleNavigation = (route: string) => {
-  //   router.push(route);
-  // };
-  console.log("rendering")
   return (
     <nav>
       <ul className="menu">

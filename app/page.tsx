@@ -1,7 +1,4 @@
 import Header from "./components/Header";
-import Layout from "./layout";
-import './Styles/Main.css'
-
 
 export default function Home() {
   return (

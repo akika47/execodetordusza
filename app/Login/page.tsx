@@ -1,34 +1,73 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from "react";
-import Header from "../components/Header";
-import '@/app/Styles/Login.css'
-import Autocomplete from "../components/Autocomplete";
+import React, { useState } from 'react';
+import '../Styles/Login.css';
 
 const Login = () => {
-  const [programmingLanguages, setProgrammingLanguages] = useState<string[]>([]);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchLanguages = async () => {
-      try {
-        const response = await fetch('/api/languages'); // Assuming '/api/languages' is the correct API route
-        const data = await response.json();
-        if (response.ok) {
-          // Assuming the 'data' object contains an array of languages
-          setProgrammingLanguages(data.data.map((item: { name: string }) => item.name));
-        } else {
-          console.error("Failed to fetch languages:", data.data);
-        }
-      } catch (error) {
-        console.error("Error fetching languages:", error);
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("Login successful:", data);
+      } else {
+        setError(data.message || "Login failed");
       }
-    };
-
-    fetchLanguages();
-  }, []);
+    } catch (err) {
+      setError("An error occurred during login.");
+      console.error("Login error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div></div>
+    <div className="mainContainer">
+      <form onSubmit={handleLogin} className="inputContainer">
+        <div className="titleContainer">Login</div>
+
+        <input
+          type="text"
+          className="inputBox"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+        
+        <input
+          type="password"
+          className="inputBox"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+
+        {error && <div className="errorLabel">{error}</div>}
+
+        <button type="submit" className="inputBox buttonContainer" disabled={loading}>
+          {loading ? "Logging in..." : "Login"}
+        </button>
+      </form>
+    </div>
   );
 };
 
