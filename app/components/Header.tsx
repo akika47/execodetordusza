@@ -1,21 +1,29 @@
 "use client";
 
+import '../Styles/Header.css'
+
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Home from '../page';
 
 const Header = () => {
-  const router = useRouter();
+  // const router = useRouter();
 
-  const handleNavigation = (route: string) => {
-    router.push(route);
-  };
-
+  // const handleNavigation = (route: string) => {
+  //   router.push(route);
+  // };
+  console.log("rendering")
   return (
-    <header>
-      <button onClick={() => handleNavigation("/")}>Home</button>
-      <button onClick={() => handleNavigation("/News")}>News</button>
-      <button onClick={() => handleNavigation("/About")}>About</button>
-    </header>
+    <nav>
+      <ul className="menu">
+        <li><Link href="/">Home</Link> </li>
+        <li><Link href="/News">News</Link> </li>
+        <li><Link href="/About">About</Link></li>
+
+
+        <li className='rightMenu'><Link href="/Login">Login</Link> </li>
+        <li className='rightMenu'><Link href="/Register">Register</Link></li>
+      </ul>
+    </nav>
   );
 };
 
