@@ -46,6 +46,7 @@ const Header = () => {
 
           <li className="rightMenu menuitem"><Link href="/Deadline">Manage Deadline</Link></li>
 
+
         )}
 
         {userRole === "Versenyző"  && (
