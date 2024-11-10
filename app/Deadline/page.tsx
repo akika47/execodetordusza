@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import styles from '@/app/Styles/Deadline.css'; 
+import '@/app/Styles/Deadline.css'; 
 
 const DeadlinePage = () => {
   const [startDate, setStartDate] = useState<string>('');
@@ -58,9 +58,9 @@ const DeadlinePage = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className="container">
       <h1>Set Deadline Dates</h1>
-      {loading && <p className={styles.loading}>Loading...</p>}
+      {loading && <p className="loading">Loading...</p>}
       {!loading && (
         <form onSubmit={handleSubmit}>
           <div>
@@ -82,7 +82,7 @@ const DeadlinePage = () => {
           <button type="submit">Update Deadlines</button>
         </form>
       )}
-      {message && <p className={styles.message}>{message}</p>}
+      {message && <p className="message">{message}</p>}
     </div>
   );
 };
