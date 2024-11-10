@@ -21,14 +21,21 @@ const Header = () => {
     <nav>
       <ul className="menu">
         <li><Link href="/">Home</Link></li>
-        <li><Link href="/News">News</Link></li>
-        <li><Link href="/About">About</Link></li>
 
         {userRole === "Szervező" && (
 
           <li className="rightMenu"><Link href="/SchoolManagement">Manage Schools</Link></li>
 
         )}
+
+        {userRole === "Versenyző"  && (
+              <li className="rightMenu"><Link href="/RegisterTeam">Register Team</Link></li>
+        )}
+        
+        {userRole === "Tanár"  && (
+              <li className="rightMenu"><Link href="/RegisterTeam">Register Team</Link></li>
+        )}
+
 
         {!userRole ? (
           <>
@@ -41,7 +48,7 @@ const Header = () => {
           </li>
         )}
 
-        <li className="rightMenu"><Link href="/RegisterTeam">Register Team</Link></li>
+
       </ul>
     </nav>
   );
