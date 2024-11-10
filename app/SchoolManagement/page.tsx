@@ -1,7 +1,9 @@
 "use client";
 import { useState, useEffect } from 'react';
 import '../Styles/SchoolManagement.css';
+
 import Header from '../components/Header';
+
 
 const SchoolManagement = () => {
   const [username, setUsername] = useState('');
@@ -55,8 +57,10 @@ const SchoolManagement = () => {
   };
 
   return (
+
     <>
     <Header/>
+
     <div className="school-management">
       <h1>School Management</h1>
       
@@ -160,9 +164,9 @@ const SchoolManagement = () => {
         </table>
       )}
     </div>
+
     </>
   );
-
 };
 
 export default SchoolManagement;
