@@ -20,7 +20,9 @@ const Header = () => {
   return (
     <nav>
       <ul className="menu">
+
         <li className='menuitem'><Link href="/">Home</Link></li>
+
 
         {userRole === "Szervező" && (
 
@@ -53,7 +55,6 @@ const Header = () => {
         {userRole === "Tanár"  && (
               <li className="rightMenu menuitem"><Link href="/RegisterTeam">Register Team</Link></li>
         )}
-
 
         {!userRole ? (
           <>
