@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -88,3 +89,4 @@ const DeadlinePage = () => {
 };
 
 export default DeadlinePage;
+

@@ -41,4 +41,6 @@ export async function GET(req: NextRequest) {
       data: `Hiba történt: ${error}`
     });
   }
+
 }
+
