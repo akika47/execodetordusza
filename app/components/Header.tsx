@@ -20,30 +20,36 @@ const Header = () => {
   return (
     <nav>
       <ul className="menu">
-        <li><Link href="/">Home</Link></li>
+        <li className='menuitem'><Link href="/">Home</Link></li>
 
         {userRole === "Szervező" && (
 
-          <li className="rightMenu"><Link href="/SchoolManagement">Manage Schools</Link></li>
+          <li className="rightMenu menuitem"><Link href="/SchoolManagement">Manage Schools</Link></li>
+   
+        )}
+
+        {userRole === "Szervező" && (
+
+          <li className="rightMenu menuitem"><Link href="/Categories">Manage Categories</Link></li>
 
         )}
 
         {userRole === "Versenyző"  && (
-              <li className="rightMenu"><Link href="/RegisterTeam">Register Team</Link></li>
+              <li className="rightMenu menuitem"><Link href="/RegisterTeam">Register Team</Link></li>
         )}
-        
+
         {userRole === "Tanár"  && (
-              <li className="rightMenu"><Link href="/RegisterTeam">Register Team</Link></li>
+              <li className="rightMenu menuitem"><Link href="/RegisterTeam">Register Team</Link></li>
         )}
 
 
         {!userRole ? (
           <>
-            <li className="rightMenu"><Link href="/Login">Login</Link></li>
-            <li className="rightMenu"><Link href="/Register">Register</Link></li>
+            <li className="rightMenu menuitem"><Link href="/Login">Login</Link></li>
+            <li className="rightMenu menuitem"><Link href="/Register">Register</Link></li>
           </>
         ) : (
-          <li className="rightMenu" onClick={handleLogout}>
+          <li className="rightMenu menuitem" onClick={handleLogout}>
             <Link href="/Login">Logout</Link>
           </li>
         )}

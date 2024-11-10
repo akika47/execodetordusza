@@ -13,11 +13,11 @@
   font-family: Arial, sans-serif;
 }
 
-li {
+.menuitem {
   float: left;
 }
 
-li a {
+.menuitem a {
   display: block;
   color: white;
   text-align: center;
@@ -27,7 +27,7 @@ li a {
 }
 
 
-li a:hover {
+.menuitem a:hover {
   background-color: #111;
 }
 
@@ -36,7 +36,7 @@ li a:hover {
 }
 
 @media (max-width: 768px) {
-  .menu li {
+  .menu .menuitem {
     float: none;
     text-align: center;
   }
