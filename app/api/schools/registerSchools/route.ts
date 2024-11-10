@@ -1,33 +1,50 @@
+
+import { NextApiRequest, NextApiResponse } from 'next';
 import pool from '@/app/libs/mysql';
-import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(req: NextRequest) {
-  try {
-    const { schoolName, city, principalId } = await req.json();
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'POST') {
+    const { username, password, schoolName, city, contactEmail } = req.body;
 
-    if (!schoolName || !city || !principalId) {
-      return NextResponse.json({
-        status: 400,
-        message: 'Missing required fields: schoolName, city, principalId',
-      });
+    if (!username || !password || !schoolName || !city || !contactEmail) {
+      return res.status(400).json({ message: 'All fields are required' });
     }
 
-    const db = await pool.getConnection();
-    const query = 'INSERT INTO schools (name, city, principal) VALUES (?, ?, ?)';
-    const [result] = await db.execute(query, [schoolName, city, principalId]);
-    db.release();
+    try {
+      // Insert the school with its name and city
+      const [schoolResult] = await pool.query(
+        'INSERT INTO schools (name, city) VALUES (?, ?)',
+        [schoolName, city]
+      );
+      const schoolId = (schoolResult as any).insertId;
 
-    const insertId = (result as { insertId: number }).insertId;
+      // Insert the principal as a user, using their username as the name
+      const [userResult] = await pool.query(
+        'INSERT INTO users (username, password, email, role, schoolId, name) VALUES (?, ?, ?, ?, ?, ?)',
+        [username, password, contactEmail, 'Igazgató', schoolId, username]  // Using the username as the principal's name
+      );
 
-    return NextResponse.json({
-      status: 200,
-      message: 'School registered successfully',
-      schoolId: insertId,
-    });
-  } catch (error) {
-    return NextResponse.json({
-      status: 404,
-      data: `Error: ${error}`,
-    });
+      const principalId = (userResult as any).insertId;
+
+      // Update the school's record with the principal's ID
+      await pool.query('UPDATE schools SET principal = ? WHERE id = ?', [principalId, schoolId]);
+
+      // Return success response with full data
+      return res.status(200).json({
+        message: 'School and principal registered successfully',
+        data: {
+          schoolId,
+          schoolName,
+          city,
+          principal: username,  // Returning the principal's username
+        },
+      });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'An error occurred while registering the school' });
+    }
+  } else {
+    return res.status(405).json({ message: 'Method Not Allowed' });
+
   }
 }
