@@ -36,6 +36,19 @@ const Header = () => {
 
         )}
 
+        {userRole === "Szervező" && (
+
+          <li className="rightMenu menuitem"><Link href="/Languages">Manage Languages</Link></li>
+
+        )}
+
+        {userRole === "Szervező" && (
+
+          <li className="rightMenu menuitem"><Link href="/Deadline">Manage Deadline</Link></li>
+
+
+        )}
+
         {userRole === "Versenyző"  && (
               <li className="rightMenu menuitem"><Link href="/RegisterTeam">Register Team</Link></li>
         )}
