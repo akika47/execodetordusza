@@ -1,3 +1,4 @@
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import pool from '@/app/libs/mysql';
 
@@ -44,5 +45,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   } else {
     return res.status(405).json({ message: 'Method Not Allowed' });
+
   }
 }
