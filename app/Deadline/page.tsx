@@ -1,101 +1,92 @@
-"use client";
 
-import React, { useEffect, useState } from "react";
-import Header from "../components/Header";
+'use client';
 
-const DeadlineManagement = () => {
-  const [startDate, setStartDate] = useState("");
-  const [closeDate, setCloseDate] = useState("");
-  const [newDate, setNewDate] = useState("");
-  const [error, setError] = useState("");
-  const [dateType, setDateType] = useState<"startDate" | "closeDate">("startDate");
+import { useEffect, useState } from 'react';
+import '@/app/Styles/Deadline.css'; 
 
-  const fetchDates = async () => {
-    try {
-      const response = await fetch(`/api/deadline?date=${dateType}`);
-      const data = await response.json();
-      if (data.status === 200) {
-        if (dateType === "startDate") {
-          setStartDate(data.data);
-        } else {
-          setCloseDate(data.data);
-        }
-      } else {
-        setError("Failed to fetch date.");
-      }
-    } catch (error) {
-      setError("Error fetching date.");
-    }
-  };
+const DeadlinePage = () => {
+  const [startDate, setStartDate] = useState<string>('');
+  const [closeDate, setCloseDate] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleUpdateDate = async () => {
-    if (!newDate) {
-      setError("New date is required.");
-      return;
-    }
-
-    try {
-      const response = await fetch(`/api/deadline/modify`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ date: dateType, value: newDate }),
-      });
-      const data = await response.json();
-      if (data.status === 200) {
-        fetchDates();  // Refresh the dates
-        setNewDate("");
-        setError("");
-      } else {
-        setError("Failed to update date.");
-      }
-    } catch (error) {
-      setError("Error updating date.");
-    }
-  };
 
   useEffect(() => {
-    fetchDates();
-  }, [dateType]);
+    const fetchDeadline = async () => {
+      setLoading(true);
+      try {
+        const startDateResponse = await fetch('/api/deadline?date=startDate');
+        const startData = await startDateResponse.json();
+
+        if (startData.status === 200) {
+          setStartDate(startData.data);
+        } else {
+          setMessage(startData.data);
+        }
+
+        const closeDateResponse = await fetch('/api/deadline?date=closeDate');
+        const closeData = await closeDateResponse.json();
+
+        if (closeData.status === 200) {
+          setCloseDate(closeData.data);
+        } else {
+          setMessage(closeData.data);
+        }
+      } catch (error) {
+        setMessage('Error fetching data');
+      }
+      setLoading(false);
+    };
+
+    fetchDeadline();
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    const response = await fetch('/api/deadline/set-deadline', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ startDate, closeDate }),
+    });
+
+    if (response.ok) {
+      setMessage('Deadline dates updated successfully');
+    } else {
+      setMessage('Failed to update deadlines');
+    }
+    setLoading(false);
+  };
 
   return (
-    <>
-      <Header />
-      <div>
-        <h1>Manage Deadline</h1>
-
-        <div>
-          <h3>Start Date: {startDate}</h3>
-          <h3>Close Date: {closeDate}</h3>
-        </div>
-
-        <div>
-          <label>
-            Choose Date Type:
-            <select
-              value={dateType}
-              onChange={(e) => setDateType(e.target.value as "startDate" | "closeDate")}
-            >
-              <option value="startDate">Start Date</option>
-              <option value="closeDate">Close Date</option>
-            </select>
-          </label>
-        </div>
-
-        <div>
-          <input
-            type="datetime-local"
-            value={newDate}
-            onChange={(e) => setNewDate(e.target.value)}
-          />
-          <button onClick={handleUpdateDate}>Update Date</button>
-        </div>
-
-        {error && <p style={{ color: "red" }}>{error}</p>}
-      </div>
-    </>
+    <div className="container">
+      <h1>Set Deadline Dates</h1>
+      {loading && <p className="loading">Loading...</p>}
+      {!loading && (
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Start Date:</label>
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+          </div>
+          <div>
+            <label>Close Date:</label>
+            <input
+              type="date"
+              value={closeDate}
+              onChange={(e) => setCloseDate(e.target.value)}
+            />
+          </div>
+          <button type="submit">Update Deadlines</button>
+        </form>
+      )}
+      {message && <p className="message">{message}</p>}
+    </div>
   );
 };
 
-export default DeadlineManagement;
+export default DeadlinePage;
+

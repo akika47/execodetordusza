@@ -1,4 +1,5 @@
 import pool from '@/app/libs/mysql';
+import * as bcrypt from 'bcryptjs';
 import { NextRequest, NextResponse } from 'next/server';
 
 type User = {
@@ -15,11 +16,14 @@ export async function POST(req: NextRequest) {
     const { username, password, email, phoneNumber, role, schoolId } = (await req.json()) as User;
     console.log('Received data:', { username, password, email, phoneNumber, role, schoolId });
 
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const db = await pool.getConnection();
     console.log('Database connection established');
 
     const query = 'INSERT INTO users (username, password, email, phoneNumber, role, schoolId) VALUES (?, ?, ?, ?, ?, ?)';
-    const [result] = await db.execute(query, [username, password, email, phoneNumber, role, schoolId]);
+    const [result] = await db.execute(query, [username, hashedPassword, email, phoneNumber, role, schoolId]);
     console.log('Query executed, result:', result);
     db.release();
 
