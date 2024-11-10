@@ -15,7 +15,6 @@ const SchoolManagement = () => {
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [schools, setSchools] = useState<any[]>([]);
-
   useEffect(() => {
     const fetchSchools = async () => {
       setLoading(true);
@@ -29,25 +28,20 @@ const SchoolManagement = () => {
       }
       setLoading(false);
     };
-
     fetchSchools();
   }, []);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     setSuccessMessage('');
-
     const response = await fetch('/api/schools/registerSchools', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password, schoolName, city, contactEmail }),
     });
-
     const data = await response.json();
     setLoading(false);
-
     if (data.status === 200) {
       setSuccessMessage(data.message);
       setSchools((prevSchools) => [...prevSchools, data.data]);
@@ -55,7 +49,6 @@ const SchoolManagement = () => {
       setError(data.message);
     }
   };
-
   return (
 
     <>
@@ -66,7 +59,6 @@ const SchoolManagement = () => {
       
       {error && <p className="error-message">{error}</p>}
       {successMessage && <p className="success-message">{successMessage}</p>}
-
       <h2>Add New School</h2>
       <form onSubmit={handleSubmit} className="school-form">
         <div className="form-group">
@@ -133,7 +125,6 @@ const SchoolManagement = () => {
           {loading ? 'Registering...' : 'Register School'}
         </button>
       </form>
-
       <h2>Existing Schools</h2>
       {loading ? (
         <p>Loading schools...</p>
@@ -168,5 +159,4 @@ const SchoolManagement = () => {
     </>
   );
 };
-
 export default SchoolManagement;
