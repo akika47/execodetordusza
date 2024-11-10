@@ -1,0 +1,87 @@
+.school-management {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    color: #2c3e50;
+  }
+  
+  h2 {
+    margin-top: 40px;
+    color: #34495e;
+  }
+  
+  .school-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  input {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button.submit-button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button.submit-button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+  
+  button.submit-button:hover:enabled {
+    background-color: #45a049;
+  }
+  
+  table.school-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .school-table th, .school-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .school-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .school-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .error-message {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .success-message {
+    color: green;
+    font-weight: bold;
+  }
+  

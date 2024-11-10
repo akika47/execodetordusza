@@ -25,7 +25,7 @@ const Header = () => {
         <li><Link href="/About">About</Link></li>
 
         {userRole === "Szervező" && (
-          <li className="rightMenu"><Link href="/ManageSchools">Manage Schools</Link></li>
+          <li className="rightMenu"><Link href="/SchoolManagement">Manage Schools</Link></li>
         )}
 
         {!userRole ? (

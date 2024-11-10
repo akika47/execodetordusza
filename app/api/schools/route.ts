@@ -1,21 +1,19 @@
-import pool from '@/app/libs/mysql';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import mysql from 'mysql2/promise';
+
+const db = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: 'duszadb',
+});
 
 export async function GET() {
   try {
-    const db = await pool.getConnection();
-    const query = 'SELECT * FROM schools ORDER BY city, name';
-    const [rows] = await db.execute(query);
-    db.release();
-
-    return NextResponse.json({
-      status: 200,
-      data: rows,
-    });
+    const [rows] = await db.query('SELECT * FROM schools');
+    return NextResponse.json({ status: 200, data: rows });
   } catch (error) {
-    return NextResponse.json({
-      status: 404,
-      data: `Error occurred: ${error}`,
-    });
+    console.error('Error fetching schools:', error);
+    return NextResponse.json({ status: 500, message: 'Error fetching schools' });
   }
 }
