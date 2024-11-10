@@ -1,4 +1,5 @@
 import pool from '@/app/libs/mysql';
+import * as bcrypt from 'bcryptjs';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
@@ -19,7 +20,10 @@ export async function POST(req: NextRequest) {
     if (rows.length > 0) {
       const user = rows[0];
 
-      if (user.password === password) { // Password matches
+      // Compare the entered password with the stored hashed password
+      const isPasswordMatch = await bcrypt.compare(password, user.password);
+
+      if (isPasswordMatch) {
         console.log('Password matches, user authenticated');
         return NextResponse.json({
           status: 200,
