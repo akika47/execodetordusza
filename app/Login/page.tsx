@@ -14,6 +14,9 @@ const Login = () => {
     setLoading(true);
     setError(null);
 
+
+    console.log("Login attempt:", { username, password });
+
     try {
       const response = await fetch("/api/login", {
         method: "POST",
@@ -25,10 +28,29 @@ const Login = () => {
 
       const data = await response.json();
 
+
+      console.log("Login response data:", data);
+
       if (response.ok) {
         console.log("Login successful:", data);
+
+
+        const role = data.data?.role;
+
+        if (role) {
+          console.log("Storing role in localStorage:", role);
+          localStorage.setItem("role", role);
+          
+  
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 500); 
+        } else {
+          console.error("Role not found in response data.");
+          setError("Failed to retrieve role.");
+        }
       } else {
-        setError(data.message || "Login failed");
+        setError(data.data || "Login failed");
       }
     } catch (err) {
       setError("An error occurred during login.");

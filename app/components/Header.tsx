@@ -1,23 +1,45 @@
 "use client";
 
-import '../Styles/Header.css'
-
+import '../Styles/Header.css';
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
-
 const Header = () => {
+  const [userRole, setUserRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    setUserRole(role);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("role");
+    setUserRole(null);
+  };
 
   return (
     <nav>
       <ul className="menu">
-        <li><Link href="/">Home</Link> </li>
-        <li><Link href="/News">News</Link> </li>
+        <li><Link href="/">Home</Link></li>
+        <li><Link href="/News">News</Link></li>
         <li><Link href="/About">About</Link></li>
 
+        {userRole === "Szervező" && (
+          <li className="rightMenu"><Link href="/ManageSchools">Manage Schools</Link></li>
+        )}
 
-        <li className='rightMenu'><Link href="/Login">Login</Link> </li>
-        <li className='rightMenu'><Link href="/Register">Register</Link></li>
-        <li className='rightMenu'><Link href="/RegisterTeam">RegisterTeam</Link></li>
+        {!userRole ? (
+          <>
+            <li className="rightMenu"><Link href="/Login">Login</Link></li>
+            <li className="rightMenu"><Link href="/Register">Register</Link></li>
+          </>
+        ) : (
+          <li className="rightMenu" onClick={handleLogout}>
+            <Link href="/Login">Logout</Link>
+          </li>
+        )}
+
+        <li className="rightMenu"><Link href="/RegisterTeam">Register Team</Link></li>
       </ul>
     </nav>
   );

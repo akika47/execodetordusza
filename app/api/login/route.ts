@@ -4,7 +4,8 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(req: NextRequest) {
   try {
     const { username, password } = await req.json();
-    console.log('Login attempt:', { username });
+
+    console.log('Received login attempt:', { username, password });
 
     const db = await pool.getConnection();
     console.log('Database connection established for login');
@@ -13,11 +14,13 @@ export async function POST(req: NextRequest) {
     const [rows] = await db.execute(query, [username]) as [Array<{ id: number, username: string, password: string, role: string, schoolId: number }>, any];
     db.release();
 
+    console.log('Database query result:', rows);
+
     if (rows.length > 0) {
       const user = rows[0];
 
-
-      if (user.password === password) { // Replace with bcrypt comparison later when hashing
+      if (user.password === password) { // Password matches
+        console.log('Password matches, user authenticated');
         return NextResponse.json({
           status: 200,
           data: {
@@ -29,12 +32,14 @@ export async function POST(req: NextRequest) {
           },
         });
       } else {
+        console.log('Incorrect password');
         return NextResponse.json({
           status: 401,
           data: 'Invalid username or password.',
         });
       }
     } else {
+      console.log('User not found');
       return NextResponse.json({
         status: 404,
         data: 'User not found.',

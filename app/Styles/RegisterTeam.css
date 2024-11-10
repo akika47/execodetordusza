@@ -5,16 +5,15 @@ nav {
     z-index: 100;
   }
   
-  /* Add padding to Container to push down the content below the header */
   .Container {
     display: flex;
     flex-direction: column;
-    padding-top: 60px; /* Adjust this value if the header height changes */
+    padding-top: 60px; 
     height: 100vh;
     width: 100vw;
     background-color: #f9f9f9;
     font-family: Arial, sans-serif;
-    overflow-y: auto; /* Allow scrolling if content overflows */
+    overflow-y: auto; 
   }
   
   .mainContainer {
@@ -26,12 +25,11 @@ nav {
     font-family: Arial, sans-serif;
   }
   
-  /* Add padding and space for the form */
   .formContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px; /* Adds spacing between form elements */
+    gap: 15px;
     padding: 30px;
     background-color: white;
     border-radius: 8px;
@@ -40,7 +38,6 @@ nav {
     max-width: 500px;
   }
   
-  /* Style input fields with a modern look */
   .formContainer input[type="text"],
   .formContainer input[type="number"] {
     width: 100%;
@@ -53,21 +50,20 @@ nav {
   
   .formContainer input:focus {
     outline: none;
-    border-color: #007bff; /* Blue border on focus */
+    border-color: #007bff; 
     box-shadow: 0 0 4px rgba(0, 123, 255, 0.2);
   }
   
-  /* Remove arrows from number input fields */
   input[type="number"]::-webkit-outer-spin-button,
   input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
   input[type="number"] {
+    appearance: textfield;
     -moz-appearance: textfield;
   }
-  
-  /* Style autocomplete dropdown */
+ 
   .autocomplete {
     position: relative;
     width: 100%;
@@ -93,13 +89,11 @@ nav {
     cursor: pointer;
     font-size: 14px;
   }
-  
-  /* Space between autocomplete items */
+
   .autocomplete-items div:not(:last-child) {
     margin-bottom: 4px;
   }
   
-  /* Hover effect for autocomplete items */
   .autocomplete-items div:hover {
     background-color: #f0f0f0;
   }
@@ -107,7 +101,7 @@ nav {
   .formContainer button[type="submit"] {
     width: 100%;
     padding: 10px;
-    background-color: #007bff; /* Blue background */
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
@@ -117,12 +111,12 @@ nav {
 }
 
 .formContainer button[type="submit"]:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+    background-color: #0056b3; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .formContainer button[type="submit"]:active {
-    background-color: #004494; /* Even darker blue on click */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Slightly reduced shadow */
+    background-color: #004494;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
 }
   
