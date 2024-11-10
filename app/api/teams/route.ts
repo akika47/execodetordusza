@@ -4,7 +4,11 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET() {
   try {
     const db = await pool.getConnection();
-    const query = 'SELECT * FROM schools ORDER BY city, name';
+    const query = `
+      SELECT t.id, t.teamName, t.schoolId, t.status, s.name AS schoolName
+      FROM teams t
+      JOIN schools s ON t.schoolId = s.id
+    `;
     const [rows] = await db.execute(query);
     db.release();
 
@@ -15,7 +19,7 @@ export async function GET() {
   } catch (error) {
     return NextResponse.json({
       status: 404,
-      data: `Error occurred: ${error}`,
+      data: `Error: ${error}`,
     });
   }
 }

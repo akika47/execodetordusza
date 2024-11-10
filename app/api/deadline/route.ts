@@ -21,8 +21,9 @@ export async function GET(req: NextRequest) {
         } else {
             return NextResponse.json({ data: 'type paraméter hibásan lett megadva' }, { status: 400 });
         }
-        const [rows] = await db.execute(query);
-        db.release()
+        const [rows] = await db.execute(query) as [Array<{ startDate: number, closeDate: number}>, any];
+        db.release();
+    
 
         const dateValue = rows[0][date]
         const formattedDate = new Date(dateValue).toISOString().replace("T", " ").split(".")[0];

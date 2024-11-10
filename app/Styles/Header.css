@@ -26,17 +26,15 @@ li a {
   transition: background-color 0.3s ease;
 }
 
-/* Change the link color on hover */
+
 li a:hover {
   background-color: #111;
 }
 
-/* Align the right-side menu */
 .rightMenu {
   float: right;
 }
 
-/* Responsive menu for smaller screens */
 @media (max-width: 768px) {
   .menu li {
     float: none;
